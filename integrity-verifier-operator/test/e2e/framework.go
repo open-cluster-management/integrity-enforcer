@@ -51,8 +51,9 @@ var (
 	verifier_dir                        = os.Getenv("VERIFIER_OP_DIR")
 	deploy_dir                          = verifier_dir + "test/deploy/"
 	kubeconfigManaged                   = os.Getenv("KUBECONFIG")
-	integrityVerifierOperatorCR         = "/tmp/" + "apis_v1alpha1_integrityverifier.yaml"
-	integrityVerifierOperatorCR_updated = "/tmp/" + "apis_v1alpha1_integrityverifier_update.yaml"
+	tmpDir                              = os.Getenv("TMP_DIR")
+	integrityVerifierOperatorCR         = tmpDir + "apis_v1alpha1_integrityverifier.yaml"
+	integrityVerifierOperatorCR_updated = tmpDir + "apis_v1alpha1_integrityverifier_update.yaml"
 	test_rsp                            = deploy_dir + "test-rsp.yaml"
 	test_rsp_iv                         = deploy_dir + "test-rsp-iv-ns.yaml"
 	test_configmap                      = deploy_dir + "test-configmap.yaml"
