@@ -65,7 +65,7 @@ jobs:
 
     - stage: build
       name: "Build the image and push it"
-      if: env (UPSTREAM_ENV}) = false
+      if: env (UPSTREAM_ENV) = false
       script:
          - | 
            echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
