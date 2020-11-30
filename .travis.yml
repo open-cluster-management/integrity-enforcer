@@ -49,7 +49,7 @@ stages:
 
 jobs:
   include:
-   - stage: lint
+    - stage: lint
       name: "Run code lint"
       script:
          - |
@@ -74,7 +74,7 @@ jobs:
           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
               make init
               make component/test/unit
-         fi
+          fi
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
       script:
