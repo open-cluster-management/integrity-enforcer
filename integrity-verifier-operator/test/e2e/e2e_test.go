@@ -16,7 +16,7 @@ package e2e
 
 import (
 //	goctx "context"
-//	"fmt"
+	"fmt"
 //	"os/exec"
 //	"time"
 
@@ -62,6 +62,7 @@ var _ = Describe("Test integrity verifier", func() {
 			var timeout int = 300
 			expected := "integrity-verifier-server"
 			cmd_err := Kubectl("apply", "-f", integrityVerifierOperatorCR, "-n", iv_namespace)
+			fmt.Println(cmd_err)
 			Expect(cmd_err).To(BeNil())
 			Eventually(func() error {
 				return CheckPodStatus(framework, iv_namespace, expected)
