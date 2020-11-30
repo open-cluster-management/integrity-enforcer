@@ -164,7 +164,10 @@ build-images:
 docker-login:
 		${IV_REPO_ROOT}/build/docker_login.sh
 
-push-images: docker-login
+push-images:
+		@if [ "$(UPSTREAM_ENV)" = true ]; then \
+			make docker-login; \
+		fi
 		${IV_REPO_ROOT}/build/push_images.sh
 
 pull-images:
@@ -192,7 +195,7 @@ build-bundle:
 			$(IV_REPO_ROOT)/build/build_bundle.sh; \
 		else \
 			$(IV_REPO_ROOT)/build/build_bundle_ocm.sh; \
-		fi						
+		fi
 
 ############################################################
 # clean section
