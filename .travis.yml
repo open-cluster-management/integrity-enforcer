@@ -18,11 +18,11 @@ branches:
     - develop
     - /^release-[0-9]+\..*$/
 
-#addons:
-#  sonarcloud:
-#    organization: "open-cluster-management"
-#    token:
-#      secure: "ZSZzRQRHoNDLi0m1lXdVQNnTcWEqXbTpkyi3sOnRrTuro9tg8J4AscptKw5K0WBvisHxtc0tXMavBmibt6YTEVN2srhanyIkvU1i4Wsfl7Rkhrhq+bsuZQVSMfsNDig1cnV6S8T1JleXGx8WPXJpwBAV6Dk5G2ll7+zt+8MN7fHnQ5FBFTZaqHvOY/WBcL70z7YNqfHcV3forByPOxgBJO+iNAUCFFBZrmp4vY7T3uYpmUztBjim1nBIrTq3mi5U20jIoFe9TV6BZJo1XWYsS6SSHubuhUtAqy6npxxQt3b/byg0Ja0QFL6sGT0gs4JyCjV+IOYLuigGl+V+ChtlyICOh0w/aUlq/gHUnJy1necJJSwjK+BvW2T48B1muLUDK4yio8GuaRd43U+X8E8H8UN5d3LlFxesROA4dB7YCkOx5WoE8gm4yGsURmnprPI3WABeNCT+SPbnzUbwfYPRk1K/Ka0Hns/vfjqgvoMnwRNi+B1ifFHcVqDjTeJPvdMFCIU/xWewRmTMO2gevRPsiLd7mOxLIvkuPFD9XIHP1MQic8gHekMlmVww2EqPCknYOG8GfgbpbABsQmYmvg76M0N8ulSec4mDqbxq41utf32E4GxAROBgaDZEAsjZYFwgcn+VkfmKGANC3ufpEPhiupkW+Uz124P6WB5Sj5Wz2vc="
+addons:
+  sonarcloud:
+    organization: "open-cluster-management"
+    token:
+      secure: "ZSZzRQRHoNDLi0m1lXdVQNnTcWEqXbTpkyi3sOnRrTuro9tg8J4AscptKw5K0WBvisHxtc0tXMavBmibt6YTEVN2srhanyIkvU1i4Wsfl7Rkhrhq+bsuZQVSMfsNDig1cnV6S8T1JleXGx8WPXJpwBAV6Dk5G2ll7+zt+8MN7fHnQ5FBFTZaqHvOY/WBcL70z7YNqfHcV3forByPOxgBJO+iNAUCFFBZrmp4vY7T3uYpmUztBjim1nBIrTq3mi5U20jIoFe9TV6BZJo1XWYsS6SSHubuhUtAqy6npxxQt3b/byg0Ja0QFL6sGT0gs4JyCjV+IOYLuigGl+V+ChtlyICOh0w/aUlq/gHUnJy1necJJSwjK+BvW2T48B1muLUDK4yio8GuaRd43U+X8E8H8UN5d3LlFxesROA4dB7YCkOx5WoE8gm4yGsURmnprPI3WABeNCT+SPbnzUbwfYPRk1K/Ka0Hns/vfjqgvoMnwRNi+B1ifFHcVqDjTeJPvdMFCIU/xWewRmTMO2gevRPsiLd7mOxLIvkuPFD9XIHP1MQic8gHekMlmVww2EqPCknYOG8GfgbpbABsQmYmvg76M0N8ulSec4mDqbxq41utf32E4GxAROBgaDZEAsjZYFwgcn+VkfmKGANC3ufpEPhiupkW+Uz124P6WB5Sj5Wz2vc="
   
 env:
   global:
@@ -41,40 +41,40 @@ before_install:
   - export IV_REPO_ROOT=$TRAVIS_BUILD_DIR
 
 stages:
-#  - lint
-#  - build
-#  - test-unit
+  - lint
+  - build
+  - test-unit
   - test-e2e
-#  - publish
+  - publish
 
 jobs:
   include:
-#   - stage: lint
-#      name: "Run code lint"
-#      script:
-#         - |
-#           make lint
-#    - stage: build
-#      name: "Build the image and push it"
-#      script:
-#         - |
-#           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
-#               make build-images NO_CACHE=true
-#           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
-#               make init
-#               make component/build
-#           fi
-#    - stage: test-unit
-#      name: "Run unit test"
-#      script:
-#        - set -e
-#        - |
-#          if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
-#              make test-unit
-#          elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
-#              make init
-#              make component/test/unit
- #         fi
+   - stage: lint
+      name: "Run code lint"
+      script:
+         - |
+           make lint
+    - stage: build
+      name: "Build the image and push it"
+      script:
+         - |
+           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+               make build-images NO_CACHE=true
+           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+               make init
+               make component/build
+           fi
+    - stage: test-unit
+      name: "Run unit test"
+      script:
+        - set -e
+        - |
+          if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+              make test-unit
+          elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+              make init
+              make component/test/unit
+         fi
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
       script:
@@ -88,7 +88,8 @@ jobs:
           fi
     - stage: publish
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
-      if: env(ENABLE_PUBLISH) = true AND type = push AND branch =~ /^release-[0-9]+\..*$/
+      if: env(ENABLE_PUBLISH) = true 
+      #AND type = push AND branch =~ /^release-[0-9]+\..*$/
       script:
         - |
           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
