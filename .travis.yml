@@ -42,6 +42,7 @@ before_install:
 
 stages:
   - lint
+  - build-upstream
   - build
   - test-unit
   - test-e2e
@@ -54,18 +55,22 @@ jobs:
       script:
          - |
            make lint
-    - stage: build
+    - stage: build-upstream
       name: "Build the image and push it"
+      if: env(UPSTREAM_ENV) = true
       script:
          - |
-           if [ ! -z "${UPSTREAM_ENV}" ] || [ "${UPSTREAM_ENV}" = true ]; then
-               echo UPSTREAM_ENV: ${UPSTREAM_ENV}
-               make build-images NO_CACHE=true
-           elif [ -z "${UPSTREAM_ENV}" ] && [ "${UPSTREAM_ENV}" = false ]; then
-               echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
-               make init
-               make component/build
-           fi
+           echo UPSTREAM_ENV: ${UPSTREAM_ENV}
+           make build-images NO_CACHE=true
+
+    - stage: build
+      name: "Build the image and push it"
+      if: env (UPSTREAM_ENV}) = false
+      script:
+         - | 
+           echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
+           make init
+           make component/build
     - stage: test-unit
       name: "Run unit test"
       script:
