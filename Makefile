@@ -44,7 +44,7 @@ endif
 ifeq ($(UPSTREAM_ENV),true)
   USE_VENDORIZED_BUILD_HARNESS = false
 else
-  USE_VENDORIZED_BUILD_HARNESS ?=
+  USE_VENDORIZED_BUILD_HARNESS = true
 endif
 
 
