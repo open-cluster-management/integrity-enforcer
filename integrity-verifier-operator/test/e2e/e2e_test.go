@@ -15,15 +15,15 @@
 package e2e
 
 import (
-	goctx "context"
-	"fmt"
-	"os/exec"
-	"time"
+//	goctx "context"
+//	"fmt"
+//	"os/exec"
+//	"time"
 
 	. "github.com/onsi/ginkgo" //nolint:golint
 	. "github.com/onsi/gomega" //nolint:golint
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+//	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 var _ = Describe("Test integrity verifier", func() {
