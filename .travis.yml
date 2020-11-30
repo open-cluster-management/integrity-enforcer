@@ -71,11 +71,11 @@ jobs:
       script:
         - set -e
         - |
-          if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
-              echo UPSTREAM_ENV: $UPSTREAM_ENV
+          if [ ! -z "${UPSTREAM_ENV}" ] || [ "${UPSTREAM_ENV}" = true ]; then
+              echo UPSTREAM_ENV: ${UPSTREAM_ENV}
               make test-unit
-          elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
-              echo UPSTREAM_ENV: $UPSTREAM_ENV
+          elif [ -z "${UPSTREAM_ENV}" ] && [ "${UPSTREAM_ENV}" = false ]; then
+              echo UPSTREAM_ENV: ${UPSTREAM_ENV}
               make init
               make component/test/unit
           fi
@@ -83,9 +83,9 @@ jobs:
       name: "Deploy the image to a cluster and run e2e tests"
       script:
         - |
-          if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+          if [ ! -z "${UPSTREAM_ENV}" ] || [ "$UPSTREAM_ENV" = true ]; then
               make test-e2e
-          elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+          elif [ -z "${UPSTREAM_ENV}" ] && [ "$UPSTREAM_ENV" = false ]; then
               make init
               make component/pull
               make component/test/e2e
