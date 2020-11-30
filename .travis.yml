@@ -41,40 +41,40 @@ before_install:
   - export IV_REPO_ROOT=$TRAVIS_BUILD_DIR
 
 stages:
-  - lint
-  - build
-  - test-unit
+#  - lint
+#  - build
+#  - test-unit
   - test-e2e
-  - publish
+#  - publish
 
 jobs:
   include:
-    - stage: lint
-      name: "Run code lint"
-      script:
-         - |
-           make lint
-    - stage: build
-      name: "Build the image and push it"
-      script:
-         - |
-           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
-               make build-images NO_CACHE=true
-           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
-               make init
-               make component/build
-           fi
-    - stage: test-unit
-      name: "Run unit test"
-      script:
-        - set -e
-        - |
-          if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
-              make test-unit
-          elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
-              make init
-              make component/test/unit
-          fi
+#   - stage: lint
+#      name: "Run code lint"
+#      script:
+#         - |
+#           make lint
+#    - stage: build
+#      name: "Build the image and push it"
+#      script:
+#         - |
+#           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+#               make build-images NO_CACHE=true
+#           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+#               make init
+#               make component/build
+#           fi
+#    - stage: test-unit
+#      name: "Run unit test"
+#      script:
+#        - set -e
+#        - |
+#          if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+#              make test-unit
+#          elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+#              make init
+#              make component/test/unit
+ #         fi
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
       script:
