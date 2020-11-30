@@ -109,16 +109,14 @@ jobs:
           make component/test/e2e
     - stage: publish-upstream
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
-      if: env(ENABLE_PUBLISH) = true AND  env(UPSTREAM_ENV) = true
-      #AND type = push AND branch =~ /^release-[0-9]+\..*$/
+      if: env(ENABLE_PUBLISH) = true AND  env(UPSTREAM_ENV) = true AND type = push AND branch =~ /^release-[0-9]+\..*$/
       script:
         - |
           make push-images
           make build-bundle
     - stage: publish
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
-      if: env(ENABLE_PUBLISH) = true AND  env(UPSTREAM_ENV) = false
-      #AND type = push AND branch =~ /^release-[0-9]+\..*$/
+      if: env(ENABLE_PUBLISH) = true AND  env(UPSTREAM_ENV) = false AND type = push AND branch =~ /^release-[0-9]+\..*$/
       script:
         - |
           echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
