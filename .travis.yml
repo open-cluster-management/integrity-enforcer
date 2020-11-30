@@ -58,9 +58,11 @@ jobs:
       name: "Build the image and push it"
       script:
          - |
-           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+           if [ ! -z "${UPSTREAM_ENV}" ] || [ "${UPSTREAM_ENV}" = true ]; then
+               echo UPSTREAM_ENV: ${UPSTREAM_ENV}
                make build-images NO_CACHE=true
-           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+           elif [ -z "${UPSTREAM_ENV}" ] && [ "${UPSTREAM_ENV}" = false ]; then
+               echo UPSTREAM_ENV: ${UPSTREAM_ENV}
                make init
                make component/build
            fi
@@ -70,8 +72,10 @@ jobs:
         - set -e
         - |
           if [ ! -z "$UPSTREAM_ENV" ] || [ "$UPSTREAM_ENV" = true ]; then
+              echo UPSTREAM_ENV: $UPSTREAM_ENV
               make test-unit
           elif [ -z "$UPSTREAM_ENV" ] && [ "$UPSTREAM_ENV" = false ]; then
+              echo UPSTREAM_ENV: $UPSTREAM_ENV
               make init
               make component/test/unit
           fi
