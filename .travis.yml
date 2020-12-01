@@ -60,6 +60,7 @@ jobs:
          - | 
            make init
            make component/build
+           make sec-scan
     - stage: test-unit
       name: "Run unit test"
       script:
