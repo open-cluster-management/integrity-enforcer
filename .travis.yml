@@ -60,8 +60,8 @@ jobs:
          - | 
            make init
            make component/build
-           export COMPONENT_NAME=${IV_IMAGE}
-           make security/scans
+           #export COMPONENT_NAME=${IV_IMAGE}
+           #make security/scans
     - stage: test-unit
       name: "Run unit test"
       script:
