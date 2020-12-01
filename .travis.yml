@@ -60,6 +60,7 @@ jobs:
          - | 
            make init
            make component/build
+           export COMPONENT_NAME=${IV_IMAGE}
            make security/scans
     - stage: test-unit
       name: "Run unit test"
@@ -68,6 +69,7 @@ jobs:
         - |
           make init
           make component/test/unit
+          export COMPONENT_NAME=${IV_IMAGE}
           make sonar/go
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
