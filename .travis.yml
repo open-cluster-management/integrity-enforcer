@@ -69,8 +69,8 @@ jobs:
         - |
           make init
           make component/test/unit
-          export COMPONENT_NAME=${IV_IMAGE}
-          make sonar/go
+          #export COMPONENT_NAME=${IV_IMAGE}
+          #make sonar/go
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
       script:
