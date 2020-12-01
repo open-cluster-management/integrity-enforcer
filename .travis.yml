@@ -60,8 +60,19 @@ jobs:
          - | 
            make init
            make component/build
-           #export COMPONENT_NAME=${IV_IMAGE}
-           #make security/scans
+           export TMP_COMPONENT_NAME=$(cat COMPONENT_NAME)
+           echo $IV_IMAGE > COMPONENT_NAME
+           make security/scans
+           echo $IV_LOGGING > COMPONENT_NAME
+           make security/scans
+           echo $IV_OPERATOR > COMPONENT_NAME
+           make security/scans
+           echo $IV_BUNDLE > COMPONENT_NAME
+           make security/scans
+           echo $IV_INDEX > COMPONENT_NAME
+           make security/scans
+           echo $TMP_COMPONENT_NAME > COMPONENT_NAME
+           cat COMPONENT_NAME
     - stage: test-unit
       name: "Run unit test"
       script:
