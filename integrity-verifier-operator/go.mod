@@ -6,6 +6,7 @@ go 1.13
 
 require (
 	cloud.google.com/go v0.70.0 // indirect
+	github.com/IBM/integrity-enforcer/integrity-verifier-operator v0.0.0-00010101000000-000000000000
 	github.com/IBM/integrity-enforcer/verifier v0.0.0-20201001024601-320551d946dc
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/docker/docker v1.4.2-0.20200203170920-46ec8731fbce // indirect
