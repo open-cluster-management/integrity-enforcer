@@ -60,26 +60,14 @@ jobs:
          - | 
            make init
            make component/build
-           echo IV_VERSION ${IV_VERSION}
-           export COMPONENT_VERSION="${IV_VERSION}"
-           export SECURITYSCANS_IMAGE_NAME="${IV_IMAGE}"
-           echo SECURITYSCANS_IMAGE_NAME ${SECURITYSCANS_IMAGE_NAME}
-           make security/scans
-           export SECURITYSCANS_IMAGE_NAME="${IV_LOGGING}"
-           echo SECURITYSCANS_IMAGE_NAME ${SECURITYSCANS_IMAGE_NAME}
-           make security/scans
-           export SECURITYSCANS_IMAGE_NAME="${IV_OPERATOR}"
-           echo SECURITYSCANS_IMAGE_NAME ${SECURITYSCANS_IMAGE_NAME}
-           make security/scans  
     - stage: test-unit
       name: "Run unit test"
       script:
         - set -e
         - |
           make init
-          #make component/test/unit
-          export COMPONENT_NAME=${IV_IMAGE}
-          make sonar/go
+          make component/test/unit
+          # make sonar/go
           #cd ${IV_REPO_ROOT}/integrity-verifier-operator && make sonar/go
           #cd ${IV_REPO_ROOT}/verifier && make sonar/go
     - stage: test-e2e
