@@ -70,7 +70,8 @@ jobs:
           make init
           #make component/test/unit
           export COMPONENT_NAME=${IV_IMAGE}
-          cd ${IV_REPO_ROOT}/integrity-verifier-operator && make sonar/go
+          make sonar/go
+          #cd ${IV_REPO_ROOT}/integrity-verifier-operator && make sonar/go
           #cd ${IV_REPO_ROOT}/verifier && make sonar/go
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
