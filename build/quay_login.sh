@@ -14,23 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
-
-echo "BUILD GOES HERE!"
-
-echo "<repo>/<component>:<tag> : $1"
-
-# Run our build target
-
-make build-images NO_CACHE=true
-
-
-echo "Pushing images"
-
-${IV_REPO_ROOT}/build/push_images_ocm.sh
-
-echo "Building integrity verifier bundle starting : $(date)"
-
-${IV_REPO_ROOT}/build/build_bundle_ocm.sh
-
-echo "Building integrity verifier bundle completed : $(date)"
+if [ -z "${QUAY_REGISTRY}" ]; then
+	echo "QUAY_REGISTRY is empty."
+	exit 1;
+fi
+if [ -z "${QUAY_USER}" ]; then
+	echo "QUAY_USER is empty."
+	exit 1;
+fi
+if [ -z "${QUAY_PASS}" ]; then
+	echo "QUAY_PASS is empty."
+	exit 1;
+fi
+docker login ${QUAY_REGISTRY} -u ${QUAY_USER} -p ${QUAY_PASS}

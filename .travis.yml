@@ -42,13 +42,9 @@ before_install:
 
 stages:
   - lint
-  - build-upstream
   - build
-  - test-unit-upstream
   - test-unit
-  - test-e2e-upstream
   - test-e2e
-  - publish-upstream
   - publish
 
 jobs:
@@ -58,68 +54,31 @@ jobs:
       script:
          - |
            make lint
-    - stage: build-upstream
-      name: "Build the image and push it"
-      if: env(UPSTREAM_ENV) = true
-      script:
-         - |
-           echo UPSTREAM_ENV: ${UPSTREAM_ENV}
-           make build-images NO_CACHE=true
-
     - stage: build
       name: "Build the image and push it"
-      if: env (UPSTREAM_ENV) = false
       script:
          - | 
-           echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
            make init
            make component/build
-    - stage: test-unit-upstream
-      name: "Run unit test"
-      if: env(UPSTREAM_ENV) = true
-      script:
-        - set -e
-        - |
-          echo UPSTREAM_ENV: ${UPSTREAM_ENV}
-          make test-unit
     - stage: test-unit
       name: "Run unit test"
-      if: env(UPSTREAM_ENV) = false
       script:
         - set -e
         - |
-          echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
           make init
           make component/test/unit
-    - stage: test-e2e-upstream
-      name: "Deploy the image to a cluster and run e2e tests"
-      if: env(UPSTREAM_ENV) = true 
-      script:
-        - |
-          make test-e2e
-
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
-      if: env(UPSTREAM_ENV) = false
       script:
         - |
-          echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
           make init
           make component/pull
           make component/test/e2e
-    - stage: publish-upstream
-      name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
-      if: env(ENABLE_PUBLISH) = true AND  env(UPSTREAM_ENV) = true AND type = push AND branch =~ /^release-[0-9]+\..*$/
-      script:
-        - |
-          make push-images
-          make build-bundle
     - stage: publish
       name: "Publish the image to quay with an official version/sha tag and publish entry to integration pipeline stage"
-      if: env(ENABLE_PUBLISH) = true AND  env(UPSTREAM_ENV) = false AND type = push AND branch =~ /^release-[0-9]+\..*$/
+      if: env(ENABLE_PUBLISH) = true AND type = push AND branch =~ /^release-[0-9]+\..*$/
       script:
         - |
-          echo UPSTREAM_ENV OCM: ${UPSTREAM_ENV}
           make init
           ${TRAVIS_BUILD_DIR}/build/pipeline.sh
           

@@ -20,6 +20,10 @@ ifeq ($(IV_REPO_ROOT),)
 $(error IV_REPO_ROOT is not set)
 endif
 
+ifeq ($(IV_ENV),)
+$(error "IV_ENV is empty. Please set local or remote.")
+endif
+
 include  .env
 export $(shell sed 's/=.*//' .env)
 
@@ -41,20 +45,8 @@ endif
 
 # CICD BUILD HARNESS
 ####################
-#ifeq ($(UPSTREAM_ENV),true)
-#  USE_VENDORIZED_BUILD_HARNESS = false
-#else
-#  USE_VENDORIZED_BUILD_HARNESS ?=
-#endif
-USE_VENDORIZED_BUILD_HARNESS ?=
-
-$(shell echo $(USE_VENDORIZED_BUILD_HARNESS))
-
-ifndef USE_VENDORIZED_BUILD_HARNESS
+ifeq ($(IV_ENV), remote)
 -include $(shell curl -s -H 'Authorization: token ${GITHUB_TOKEN}' -H 'Accept: application/vnd.github.v4.raw' -L https://api.github.com/repos/open-cluster-management/build-harness-extensions/contents/templates/Makefile.build-harness-bootstrap -o .build-harness-bootstrap; echo .build-harness-bootstrap)
-else
-#-include vbh/.build-harness-bootstrap
--include $(shell curl -sSL -o .build-harness "https://git.io/build-harness"; echo .build-harness)
 endif
 ####################
 
@@ -166,8 +158,11 @@ build-images:
 docker-login:
 		${IV_REPO_ROOT}/build/docker_login.sh
 
+quay-login:
+		 ${IV_REPO_ROOT}/build/quay_login.sh
+
 push-images:
-		@if [ "$(UPSTREAM_ENV)" = true ]; then \
+		@if [ "$(IV_ENV)" = local ]; then \
 			make docker-login; \
 		fi
 		${IV_REPO_ROOT}/build/push_images.sh
@@ -180,20 +175,8 @@ pull-images:
 ############################################################
 
 build-bundle:
-		@if [ "$(UPSTREAM_ENV)" = true ]; then \
-			if [ -z "$(QUAY_REGISTRY)" ]; then \
-				echo "QUAY_REGISTRY is empty."; \
-				exit 1; \
-			fi; \
-			if [ -z "$(QUAY_USER)" ]; then \
-				echo "QUAY_USER is empty."; \
-				exit 1; \
-			fi; \
-			if [ -z "$(QUAY_PASS)" ]; then \
-				echo "QUAY_PASS is empty."; \
-				exit 1; \
-			fi; \
-			docker login ${QUAY_REGISTRY} -u ${QUAY_USER} -p ${QUAY_PASS}; \
+		@if [ "$(IV_ENV)" = local ]; then \
+			make quay-login; \
 			$(IV_REPO_ROOT)/build/build_bundle.sh; \
 		else \
 			$(IV_REPO_ROOT)/build/build_bundle_ocm.sh; \
