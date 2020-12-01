@@ -60,19 +60,17 @@ jobs:
          - | 
            make init
            make component/build
-           export TMP_COMPONENT_NAME=$(cat COMPONENT_NAME)
-           echo $IV_IMAGE > COMPONENT_NAME
+           export COMPONENT_VERSION=${IV_VERSION}
+           export COMPONENT_DOCKER_REPO=${REGISTRY}
+           export COMPONENT_NAME=${IV_IMAGE}
+           export SECURITYSCANS_IMAGE_NAME=${COMPONENT_DOCKER_REPO}/${COMPONENT_NAME}
            make security/scans
-           echo $IV_LOGGING > COMPONENT_NAME
+           export COMPONENT_NAME=${IV_LOGGING}
+           export SECURITYSCANS_IMAGE_NAME=${COMPONENT_DOCKER_REPO}/${COMPONENT_NAME}
            make security/scans
-           echo $IV_OPERATOR > COMPONENT_NAME
-           make security/scans
-           echo $IV_BUNDLE > COMPONENT_NAME
-           make security/scans
-           echo $IV_INDEX > COMPONENT_NAME
-           make security/scans
-           echo $TMP_COMPONENT_NAME > COMPONENT_NAME
-           cat COMPONENT_NAME
+           export COMPONENT_NAME=${IV_OPERATOR}
+           export SECURITYSCANS_IMAGE_NAME=${COMPONENT_DOCKER_REPO}/${COMPONENT_NAME}
+           make security/scans  
     - stage: test-unit
       name: "Run unit test"
       script:
