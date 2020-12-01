@@ -7,6 +7,7 @@ replace github.com/docker/docker => github.com/moby/moby v0.7.3-0.20190826074503
 go 1.13
 
 require (
+	github.com/IBM/integrity-enforcer/verifier v0.0.0-00010101000000-000000000000
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/ghodss/yaml v1.0.0
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
