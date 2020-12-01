@@ -155,16 +155,10 @@ build-images:
 			$(IV_REPO_ROOT)/build/build_images.sh $(NO_CACHE); \
 		fi
 
-docker-login:
-		${IV_REPO_ROOT}/build/docker_login.sh
-
 quay-login:
 		 ${IV_REPO_ROOT}/build/quay_login.sh
 
 push-images:
-		@if [ "$(IV_ENV)" = local ]; then \
-			make docker-login; \
-		fi
 		${IV_REPO_ROOT}/build/push_images.sh
 
 pull-images:
