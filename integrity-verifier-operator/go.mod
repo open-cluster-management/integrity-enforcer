@@ -1,6 +1,6 @@
 module github.com/open-cluster-management/integrity-verifier/integrity-verifier-operator
 
-replace github.com/IBM/integrity-enforcer github.com/open-cluster-management/integrity-verifier/integrity-verifier-operator
+replace github.com/IBM/integrity-enforcer => github.com/open-cluster-management/integrity-verifier
 
 go 1.13
 

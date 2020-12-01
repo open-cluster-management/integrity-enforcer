@@ -1,6 +1,6 @@
 module github.com/open-cluster-management/integrity-verifier/verifier
 
-replace  github.com/IBM/integrity-enforcer github.com/open-cluster-management/integrity-verifier
+replace github.com/IBM/integrity-enforcer => github.com/open-cluster-management/integrity-verifier
 
 replace github.com/docker/docker => github.com/moby/moby v0.7.3-0.20190826074503-38ab9da00309 // Required by Helm
 
