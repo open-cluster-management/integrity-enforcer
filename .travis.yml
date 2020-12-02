@@ -68,7 +68,8 @@ jobs:
         - |
           make init
           make component/test/unit
-          make sonar-go-test
+          make sonar-go-test-iv
+          make sonar-go-test-op
           # make sonar/go
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
