@@ -86,6 +86,7 @@ jobs:
       script:
         - |
           make init
+          make component/build
           make publish
           #${TRAVIS_BUILD_DIR}/build/pipeline.sh
           
