@@ -437,7 +437,7 @@ sonar-go-test-iv:
 	@echo "---> gosec gosec.json"
 	@cat gosec.json
 	@if [ "$(IV_ENV)" = remote ]; then \
-		@echo "--> Running sonar-scanner"; \
+		echo "--> Running sonar-scanner"; \
 		unset SONARQUBE_SCANNER_PARAMS; \
 		sonar-scanner --debug; \
 	fi
@@ -454,7 +454,7 @@ sonar-go-test-op:
 	@echo "---> gosec gosec.json"
 	@cat gosec.json
 	@if [ "$(IV_ENV)" = remote ]; then \
-		@echo "--> Running sonar-scanner"; \
+		echo "--> Running sonar-scanner"; \
 		unset SONARQUBE_SCANNER_PARAMS; \
 		sonar-scanner --debug; \
 	fi
