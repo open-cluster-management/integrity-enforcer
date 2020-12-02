@@ -426,6 +426,9 @@ go/gosec-install:
 
 .PHONY: sonar-go-test-iv sonar-go-test-op
 sonar-go-test-iv:
+	@if [ "$(IV_ENV)" = remote ]; then \
+		make go/gosec-install; \
+	fi
 	@echo "-> Starting sonar-go-test"
 	@echo "--> Starting go test"
 	cd $(VERIFIER_DIR) && go test -coverprofile=coverage.out -json ./... | tee report.json | grep -v '"Action":"output"'
@@ -440,6 +443,9 @@ sonar-go-test-iv:
 	fi
 
 sonar-go-test-op:
+	@if [ "$(IV_ENV)" = remote ]; then \
+		make go/gosec-install; \
+	fi
 	@echo "-> Starting sonar-go-test"
 	@echo "--> Starting go test"
 	cd $(VERIFIER_OP_DIR) && go test -coverprofile=coverage.out -json ./... | tee report.json | grep -v '"Action":"output"'
