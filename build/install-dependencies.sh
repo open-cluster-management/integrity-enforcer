@@ -56,7 +56,8 @@ if ! [ -x "$(command -v kustomize)" ]; then
                   echo "A file named kustomize already exists (remove it first)."
                   exit 1
                 fi
-                curl -s https://api.github.com/repos/kubernetes-sigs/kustomize/releases | grep linux_amd64 | grep browser_download_url | sort | tail -n 1 | xargs curl -sLO
+
+		wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v3.8.5/kustomize_v3.8.5_linux_amd64.tar.gz
                 if [ -e ./kustomize_v*_linux_amd64.tar.gz ]; then
                    tar xzf ./kustomize_v*_linux_amd64.tar.gz
                 else
