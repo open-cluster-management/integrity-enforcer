@@ -69,8 +69,8 @@ jobs:
         - |
           make init
           make component/test/unit
-          make sonar-go-test-iv
-          make sonar-go-test-op
+          #make sonar-go-test-iv
+          #make sonar-go-test-op
           # make sonar/go
     - stage: test-e2e
       name: "Deploy the image to a cluster and run e2e tests"
@@ -85,7 +85,7 @@ jobs:
       #AND type = push AND branch =~ /^release-[0-9]+\..*$/
       script:
         - |
-          make init
+          #make init
           ${TRAVIS_BUILD_DIR}/build/publish_images.sh
           ${TRAVIS_BUILD_DIR}/build/publish_bundle_ocm.sh
           #${TRAVIS_BUILD_DIR}/build/pipeline.sh
