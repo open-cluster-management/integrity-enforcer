@@ -419,11 +419,6 @@ sec-scan:
 	$(IV_REPO_ROOT)/build/sec_scan.sh
 
 
-.PHONY: go/gosec-install
-## Installs latest release of Gosec
-go/gosec-install:
-	curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(GOPATH)/bin
-
 .PHONY: sonar-go-test-iv sonar-go-test-op
 sonar-go-test-iv:
 	@if [ "$(IV_ENV)" = remote ]; then \
