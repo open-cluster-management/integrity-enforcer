@@ -453,3 +453,9 @@ sonar-go-test-op:
 		unset SONARQUBE_SCANNER_PARAMS; \
 		sonar-scanner --debug; \
 	fi
+
+.PHONY: publish
+
+publish:
+	$(IV_REPO_ROOT)/build/publish_images.sh
+	$(IV_REPO_ROOT)/build/publish_bundle_ocm.sh
