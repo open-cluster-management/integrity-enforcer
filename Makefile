@@ -425,23 +425,32 @@ go/gosec-install:
 	curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(GOPATH)/bin
 
 
-.PHONY: go/gosec
-## Runs gosec in quiet mode (meaning output only if issues found). Any findings will be printed to stdout.
-go/gosec: go/gosec-install
-	gosec --quiet ./...
-
-SONAR_GO_TEST_ARGS ?=
 
 .PHONY: sonar-go-test
-sonar-go-test: go/gosec-install
+sonar-go-test-iv: go/gosec-install
 	@echo "-> Starting sonar-go-test"
 	@echo "--> Starting go test"
-	go test -coverprofile=coverage.out -json ${SONAR_GO_TEST_ARGS} | tee report.json | grep -v '"Action":"output"'
+	cd $(VERIFIER_DIR) && go test -coverprofile=coverage.out -json ./... | tee report.json | grep -v '"Action":"output"'
 	@echo "--> Running gosec"
 	gosec -fmt sonarqube -out gosec.json -no-fail ./...
 	@echo "---> gosec gosec.json"
 	@cat gosec.json
-	#@echo "--> Running sonar-scanner"
-	#unset SONARQUBE_SCANNER_PARAMS
-	#sonar-scanner --debug
+	@if [ "$(IV_ENV)" = remote ]; then \
+		@echo "--> Running sonar-scanner"; \
+		unset SONARQUBE_SCANNER_PARAMS; \
+		sonar-scanner --debug; \
+	fi
 
+sonar-go-test-op: go/gosec-install
+	@echo "-> Starting sonar-go-test"
+	@echo "--> Starting go test"
+	cd $(VERIFIER_OP_DIR) && go test -coverprofile=coverage.out -json ./... | tee report.json | grep -v '"Action":"output"'
+	@echo "--> Running gosec"
+	gosec -fmt sonarqube -out gosec.json -no-fail ./...
+	@echo "---> gosec gosec.json"
+	@cat gosec.json
+	@if [ "$(IV_ENV)" = remote ]; then \
+		@echo "--> Running sonar-scanner"; \
+		unset SONARQUBE_SCANNER_PARAMS; \
+		sonar-scanner --debug; \
+	fi
