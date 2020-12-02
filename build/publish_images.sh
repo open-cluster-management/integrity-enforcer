@@ -17,6 +17,10 @@
 set -e
 
 echo "IMAGE PUBLISH GOES HERE!"
+echo DOCKER_USER: ${DOCKER_USER}
+echo DOCKER_PASS: ${DOCKER_PASS}
+docker login quay.io -u ${DOCKER_USER} -p ${DOCKER_PASS}
+
 echo IV_IMAGE ${IV_IMAGE}
 export COMPONENT_VERSION=${IV_VERSION}
 export COMPONENT_DOCKER_REPO=${REGISTRY}
@@ -24,20 +28,25 @@ export COMPONENT_DOCKER_REPO=${REGISTRY}
 # Push ${IV_IMAGE}
 export COMPONENT_NAME=${IV_IMAGE}
 export DOCKER_IMAGE_AND_TAG=${COMPONENT_DOCKER_REPO}/${COMPONENT_NAME}:${COMPONENT_VERSION}
-if [ `go env GOOS` == "linux" ]; then
-    make component/push
-fi
+make docker-push IMG=$DOCKER_IMAGE_AND_TAG
+
+#if [ `go env GOOS` == "linux" ]; then
+#    make component/push
+#fi
 
 # Push ${IV_LOGGING}
 export COMPONENT_NAME=${IV_LOGGING}
 export DOCKER_IMAGE_AND_TAG=${COMPONENT_DOCKER_REPO}/${COMPONENT_NAME}:${COMPONENT_VERSION}
-if [ `go env GOOS` == "linux" ]; then
-    make component/push
-fi
+make docker-push IMG=$DOCKER_IMAGE_AND_TAG
+#if [ `go env GOOS` == "linux" ]; then
+#    make component/push
+#fi
 
 # Push ${IV_OPERATOR}
 export COMPONENT_NAME=${IV_OPERATOR}
 export DOCKER_IMAGE_AND_TAG=${COMPONENT_DOCKER_REPO}/${COMPONENT_NAME}:${COMPONENT_VERSION}
-if [ `go env GOOS` == "linux" ]; then
-    make component/push
-fi
+make docker-push IMG=$DOCKER_IMAGE_AND_TAG
+
+#if [ `go env GOOS` == "linux" ]; then
+#    make component/push
+#fi
