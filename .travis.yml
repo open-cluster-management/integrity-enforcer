@@ -22,7 +22,8 @@ addons:
   sonarcloud:
     organization: "open-cluster-management"
     token:
-      secure: "ZSZzRQRHoNDLi0m1lXdVQNnTcWEqXbTpkyi3sOnRrTuro9tg8J4AscptKw5K0WBvisHxtc0tXMavBmibt6YTEVN2srhanyIkvU1i4Wsfl7Rkhrhq+bsuZQVSMfsNDig1cnV6S8T1JleXGx8WPXJpwBAV6Dk5G2ll7+zt+8MN7fHnQ5FBFTZaqHvOY/WBcL70z7YNqfHcV3forByPOxgBJO+iNAUCFFBZrmp4vY7T3uYpmUztBjim1nBIrTq3mi5U20jIoFe9TV6BZJo1XWYsS6SSHubuhUtAqy6npxxQt3b/byg0Ja0QFL6sGT0gs4JyCjV+IOYLuigGl+V+ChtlyICOh0w/aUlq/gHUnJy1necJJSwjK+BvW2T48B1muLUDK4yio8GuaRd43U+X8E8H8UN5d3LlFxesROA4dB7YCkOx5WoE8gm4yGsURmnprPI3WABeNCT+SPbnzUbwfYPRk1K/Ka0Hns/vfjqgvoMnwRNi+B1ifFHcVqDjTeJPvdMFCIU/xWewRmTMO2gevRPsiLd7mOxLIvkuPFD9XIHP1MQic8gHekMlmVww2EqPCknYOG8GfgbpbABsQmYmvg76M0N8ulSec4mDqbxq41utf32E4GxAROBgaDZEAsjZYFwgcn+VkfmKGANC3ufpEPhiupkW+Uz124P6WB5Sj5Wz2vc="
+      secure: env(SONAR_ENCRYPTED_TOKEN)
+#"ZSZzRQRHoNDLi0m1lXdVQNnTcWEqXbTpkyi3sOnRrTuro9tg8J4AscptKw5K0WBvisHxtc0tXMavBmibt6YTEVN2srhanyIkvU1i4Wsfl7Rkhrhq+bsuZQVSMfsNDig1cnV6S8T1JleXGx8WPXJpwBAV6Dk5G2ll7+zt+8MN7fHnQ5FBFTZaqHvOY/WBcL70z7YNqfHcV3forByPOxgBJO+iNAUCFFBZrmp4vY7T3uYpmUztBjim1nBIrTq3mi5U20jIoFe9TV6BZJo1XWYsS6SSHubuhUtAqy6npxxQt3b/byg0Ja0QFL6sGT0gs4JyCjV+IOYLuigGl+V+ChtlyICOh0w/aUlq/gHUnJy1necJJSwjK+BvW2T48B1muLUDK4yio8GuaRd43U+X8E8H8UN5d3LlFxesROA4dB7YCkOx5WoE8gm4yGsURmnprPI3WABeNCT+SPbnzUbwfYPRk1K/Ka0Hns/vfjqgvoMnwRNi+B1ifFHcVqDjTeJPvdMFCIU/xWewRmTMO2gevRPsiLd7mOxLIvkuPFD9XIHP1MQic8gHekMlmVww2EqPCknYOG8GfgbpbABsQmYmvg76M0N8ulSec4mDqbxq41utf32E4GxAROBgaDZEAsjZYFwgcn+VkfmKGANC3ufpEPhiupkW+Uz124P6WB5Sj5Wz2vc="
   
 env:
   global:
@@ -85,5 +86,7 @@ jobs:
       script:
         - |
           make init
-          ${TRAVIS_BUILD_DIR}/build/pipeline.sh
+          ${TRAVIS_BUILD_DIR}/build/publish_images.sh
+          ${TRAVIS_BUILD_DIR}/build/publish_bundle_ocm.sh
+          #${TRAVIS_BUILD_DIR}/build/pipeline.sh
           
