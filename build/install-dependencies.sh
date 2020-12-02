@@ -70,7 +70,7 @@ if ! [ -x "$(command -v kustomize)" ]; then
 
 		#curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 	elif [[ "$OS_NAME" == "Darwin" ]]; then
-		#curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+		curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 	fi
 	chmod +x ./kustomize
 	sudo mv ./kustomize /usr/local/bin/kustomize
