@@ -64,12 +64,9 @@ if ! [ -x "$(command -v kustomize)" ]; then
                    echo "Error: kustomize binary with the version ${version#v} does not exist!"
                    exit 1
                 fi
-                #cp ./kustomize $where
                 popd >& /dev/null
                 ./kustomize version
                 echo kustomize installed to current directory.
-
-		#curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 	elif [[ "$OS_NAME" == "Darwin" ]]; then
 		curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 	fi
