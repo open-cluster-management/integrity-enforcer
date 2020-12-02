@@ -64,7 +64,6 @@ if ! [ -x "$(command -v kustomize)" ]; then
                    echo "Error: kustomize binary with the version ${version#v} does not exist!"
                    exit 1
                 fi
-                popd >& /dev/null
                 ./kustomize version
                 echo kustomize installed to current directory.
 	elif [[ "$OS_NAME" == "Darwin" ]]; then
