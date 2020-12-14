@@ -432,6 +432,7 @@ sonar-go-test-ishield:
 	gosec -fmt sonarqube -out gosec.json -no-fail ./...
 	@echo "---> gosec gosec.json"
 	@cat gosec.json
+	@cat $(SHIELD_DIR)/report.json | grep pgp_test.go
 	@if [ "$(ISHIELD_ENV)" = remote ]; then \
 		echo "--> Running sonar-scanner"; \
 		sonar-scanner --debug; \
@@ -448,6 +449,7 @@ sonar-go-test-op:
 	gosec -fmt sonarqube -out gosec.json -no-fail ./...
 	@echo "---> gosec gosec.json"
 	@cat gosec.json
+	@cat $(SHIELD_OP_DIR)/report.json | grep resources_test.go
 	@if [ "$(ISHIELD_ENV)" = remote ]; then \
 		echo "--> Running sonar-scanner"; \
 		sonar-scanner --debug; \

@@ -15,6 +15,7 @@ services:
 branches:
   only:
     - master
+    - fix/check-sonar-error
     - /^release-[0-9]+\..*$/
 
 addons:
